@@ -168,6 +168,15 @@ public class ScimUserEndpointsMockMvcTests extends InjectedMockContextTest {
     }
 
     @Test
+    public void test_Create_User_More_Than_One_Email() throws Exception {
+        ScimUser scimUser = getScimUser();
+        String secondEmail = "joe@"+generator.generate().toLowerCase()+".com";
+        scimUser.addEmail(secondEmail);
+        createUserAndReturnResult(scimUser, scimReadWriteToken, null, null)
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void testCreateUser() throws Exception {
         createUser(scimReadWriteToken);
     }
